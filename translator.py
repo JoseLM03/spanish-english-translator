@@ -1,8 +1,13 @@
 import ollama
 import httpx
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+OLLAMA_HOST = os.getenv("OLLAMA_HOST")
 
 client = ollama.Client(
-  host='http://192.168.64.1:11434',
+  host=OLLAMA_HOST,
   timeout=10.0,
 )
 
