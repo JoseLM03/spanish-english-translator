@@ -14,6 +14,9 @@ client = ollama.Client(
 while True:
   text = input("Enter text: ")
   
+  if text == "":
+    continue
+
   if text == "exit":
     print("Goodbye!")
     break
@@ -25,7 +28,7 @@ while True:
       {
         'role': 'user',
         'content': (
-          'Translate the user\'s text into natural English used today in the U.S. ' 
+          'Translate the user\'s text, regardless of the language, into natural English used today in the U.S. ' 
           'Preserve the original meaning and tone. ' 
           'If there are obvious typos or missing accents, silently correct them when interpreting the text. ' 
           f'Return only the translation, with absolutely nothing else: "{text}"'
@@ -33,7 +36,10 @@ while True:
       },
     ],
   think=False,
+  stream=True,
 )
-    print(response.message.content)
-  except httpx.ConnectTimeout:
+    for chunk in response:
+      print(chunk.message.content, end="", flush=True)
+    print()
+  except (httpx.ConnectTimeout, httpx.ReadTimeout):
     print("Error: Unable to connect to the Ollama server. Please check your connection and try again.")
