@@ -52,7 +52,7 @@ The user enters text into the command line. Python sends the text and translatio
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/JoseLM03/spanish-english-translator
 cd spanish-english-translator
 ```
 
