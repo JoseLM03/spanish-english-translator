@@ -8,7 +8,7 @@ OLLAMA_HOST = os.getenv("OLLAMA_HOST")
 
 client = ollama.Client(
   host=OLLAMA_HOST,
-  timeout=10.0,
+  timeout=25.0,
 )
 
 while True:
@@ -20,7 +20,7 @@ while True:
   if text == "exit":
     print("Goodbye!")
     break
-  
+
   try:
     response = client.chat(
     model='qwen3.5:9b', 
@@ -38,8 +38,12 @@ while True:
   think=False,
   stream=True,
 )
+    
     for chunk in response:
       print(chunk.message.content, end="", flush=True)
+   
     print()
+    
   except (httpx.ConnectTimeout, httpx.ReadTimeout):
     print("Error: Unable to connect to the Ollama server. Please check your connection and try again.")
+    
